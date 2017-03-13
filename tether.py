@@ -9,7 +9,7 @@ if len(sys.argv) > 1:
     print(mappings)
     exit()
 
-for i in cams:
+for c in cams:
     c.config['settings']['capturetarget'].set('Memory card')
 
 cameras = {
@@ -29,7 +29,7 @@ for serial, address in mappings.items():
 for serial, cam in cameras.items():
     if serial not in mappings:
         output+= "# {} not found".format(serial)
-        print("{} (cam {}) NOT FOUND!!!!!".format(serial, cam))
+        print("\033[91m{} (cam {}) NOT FOUND!!!!!\033[0m".format(serial, cam))
 
 with open('tether', 'w') as f:
     f.write(output)
