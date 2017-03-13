@@ -2,26 +2,34 @@ import subprocess
 import gphoto2cffi as gp
 import sys
 
+cams = gp.list_cameras()
+mappings = { c.status.eosserialnumber : c._usb_address for c in cams }
+
+if len(sys.argv) > 1:
+    print(mappings)
+    exit()
+
+for i in cams:
+    c.config['settings']['capturetarget'].set('Memory card')
+
 cameras = {
-   '00000000000000000000000006031485' : 'C',
-   '00000000000000000000000006020701' : 'A',
-   '00000000000000000000000006006782' : 'D',
-   '00000000000000000000000006020585' : 'B',
+    '023021006296' : 'D',
+    '013020001153' : 'B',
+    '023021006300' : 'C',
+    '023020001506' : 'A',
 }
 
-cams = gp.list_cameras()
-mappings = { c.status.serialnumber : c._usb_address for c in cams }
-
-output = ""
+output = '#!/bin/bash\n'
+output += 'dir=$(dirname "$0")\n'
 for serial, address in mappings.items():
-    output+= "pushd /Volumes/ro0kie\\ HDD/_PROJECTS/IKEA_tests/CM{}/\n".format(cameras[serial])
+    output+= "pushd $dir/CM{}/\n".format(cameras[serial])
     output+= 'gphoto2 --capture-tethered --port "usb:{:03d},{:03d}" --keep-raw --force-overwrite&\n'.format(*address)
     output+= "popd\n"
 
-for serial in cameras.keys():
+for serial, cam in cameras.items():
     if serial not in mappings:
         output+= "# {} not found".format(serial)
-        print("{} NOT FOUND!!!!!".format(serial))
+        print("{} (cam {}) NOT FOUND!!!!!".format(serial, cam))
 
-with open('tether.sh', 'w') as f:
+with open('tether', 'w') as f:
     f.write(output)
