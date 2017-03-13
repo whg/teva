@@ -17,11 +17,19 @@ do
 
   # take first image from each folder
   echo "taking first photo from each folder... "
-  for i in {A..D}; do mv CM$i/$(ls -1 CM$i | head -n 1) frames/; done
+  for i in {A..D}
+  do
+    cam="CM$i"
+    filename=$(ls -1 $cam | head -n 1)
+    if [ "$filename" != "" ]
+    then
+      mv -v $cam/$filename frames/$cam"_"$filename
+    fi
+  done
   echo "done"
 
   pushd frames
-  filenames=$(ls *.JPG)
+  filenames=$(ls *.jpg)
   gifname=$(echo $filenames | sed 's/ /-/g')"_"
   echo "gif filename $gifname"
 
@@ -30,19 +38,19 @@ do
   echo "done"
 
   echo "resizing images... "
-  mogrify -resize 1000x *.JPG
+  mogrify -resize 1000x *.jpg
   echo "done"
 
   giffilename=$gifname".gif"
   echo -n "creating gif... "
-  convert *.JPG -delay 10 -loop 0 $giffilename
+  convert *.jpg -delay 10 -loop 0 $giffilename
   echo "done"
 
 
-  convert $giffilename -fill '#0008' -draw 'rectangle 5,128,114,145' -fill white -pointsize 20  -annotate +10+41 "$filenames" $giffilename
+  convert $giffilename -fill '#0008' -fill white -pointsize 20  -annotate +10+41 "$filenames" $giffilename
 
   mkdir $gifname
-  mv *.JPG *.gif $gifname/
+  mv *.jpg *.gif $gifname/
   open -a Safari $gifname/$giffilename
 
   popd
