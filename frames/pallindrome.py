@@ -3,7 +3,7 @@ import shutil
 
 files = os.listdir()
 for f in files:
-    if f.endswith('.jpg'):
+    if f.endswith('.JPG'):
         if 'CMB' in f:
             shutil.copyfile(f, f.replace('CMB', 'CMF'))
         if 'CMC' in f:
