@@ -1,0 +1,50 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+while true
+do
+
+  files=$(ls -1 CMA | head -n 1)
+
+  if [ -z $files ]
+  then
+    echo "no files left, exiting"
+    break
+  fi
+
+  echo "doing $files"
+
+  # take first image from each folder
+  echo "taking first photo from each folder... "
+  for i in {A..D}; do mv CM$i/$(ls -1 CM$i | head -n 1) frames/; done
+  echo "done"
+
+  pushd frames
+  filenames=$(ls *.JPG)
+  gifname=$(echo $filenames | sed 's/ /-/g')"_"
+  echo "gif filename $gifname"
+
+  echo -n "making a pallindrome... "
+  python3 pallindrome.py
+  echo "done"
+
+  echo "resizing images... "
+  mogrify -resize 1000x *.JPG
+  echo "done"
+
+  giffilename=$gifname".gif"
+  echo -n "creating gif... "
+  convert *.JPG -delay 10 -loop 0 $giffilename
+  echo "done"
+
+
+  convert $giffilename -fill '#0008' -draw 'rectangle 5,128,114,145' -fill white -pointsize 20  -annotate +10+41 "$filenames" $giffilename
+
+  mkdir $gifname
+  mv *.JPG *.gif $gifname/
+  open -a Safari $gifname/$giffilename
+
+  popd
+
+done
