@@ -28,8 +28,8 @@ for serial, address in mappings.items():
 
 for serial, cam in cameras.items():
     if serial not in mappings:
-        output+= "# {} not found".format(serial)
-        print("\033[91m{} (cam {}) NOT FOUND!!!!!\033[0m".format(serial, cam))
+        output+= "# {} not found\n".format(serial)
+        print("\033[91m{} (cam {}) not found\033[0m".format(serial, cam))
 
 with open('tether', 'w') as f:
     f.write(output)
