@@ -5,15 +5,20 @@ import os
 from cameras import cameras
 
 cams = gp.list_cameras()
-mappings = { c.status.eosserialnumber : c._usb_address for c in cams }
 
-if len(sys.argv) > 1:
-    print(mappings)
-    exit()
+using_canon = True
 
+if len(sys.argv) > 1 and sys.argv[1] == "nikon":
+    using_canon = False
+
+if using_canon:
+    mappings = { c.status.eosserialnumber : c._usb_address for c in cams }
+else:
+    mappings = { c.status.serialnumber : c._usb_address for c in cams }
+
+# make sure filenames are what they're supposed to be
 for c in cams:
     c.config['settings']['capturetarget'].set('Memory card')
-
 
 output = '#!/bin/bash\n'
 output += 'dir=$(dirname "$0")\n'
