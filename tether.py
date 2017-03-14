@@ -13,7 +13,7 @@ for c in cams:
     c.config['settings']['capturetarget'].set('Memory card')
 
 cameras = {
-    '023021006296' : 'D',
+    '133052001366' : 'D',
     '013020001153' : 'B',
     '023021006300' : 'C',
     '023020001506' : 'A',
@@ -22,7 +22,7 @@ cameras = {
 output = '#!/bin/bash\n'
 output += 'dir=$(dirname "$0")\n'
 for serial, address in mappings.items():
-    output+= "pushd $dir/CM{}/\n".format(cameras[serial])
+    output+= 'pushd "$dir/CM{}/"\n'.format(cameras[serial])
     output+= 'gphoto2 --capture-tethered --port "usb:{:03d},{:03d}" --keep-raw --force-overwrite&\n'.format(*address)
     output+= "popd\n"
 

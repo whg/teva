@@ -43,7 +43,7 @@ do
 
   giffilename=$gifname".gif"
   echo -n "creating gif... "
-  convert *.JPG -delay 10 -loop 0 $giffilename
+  convert -delay 15 -loop 0 *.JPG $giffilename
   echo "done"
 
 
