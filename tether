@@ -1,0 +1,3 @@
+#!/bin/bash
+dir=$(dirname "$0")
+# 133052001366 not found# 023021006300 not found# 013020001153 not found# 023020001506 not found
