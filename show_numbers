@@ -1,10 +1,13 @@
 #!/bin/bash
+cd "$(dirname "$0")"
 
 for i in {A..D}; do
     n=$(ls -l CM$i/ | wc -l)
     if [ $n -ne 0 ]
     then
-        n=$(bc $n - 1)
+        n=$(echo "$n - 1" | bc)
+    else
+        n=0 #for consistent formatting
     fi
     echo "$i $n"
 done
