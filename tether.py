@@ -1,6 +1,8 @@
 import subprocess
 import gphoto2cffi as gp
 import sys
+import os
+from cameras import cameras
 
 cams = gp.list_cameras()
 mappings = { c.status.eosserialnumber : c._usb_address for c in cams }
@@ -12,12 +14,6 @@ if len(sys.argv) > 1:
 for c in cams:
     c.config['settings']['capturetarget'].set('Memory card')
 
-cameras = {
-    '133052001366' : 'D',
-    '013020001153' : 'B',
-    '023021006300' : 'C',
-    '023020001506' : 'A',
-}
 
 output = '#!/bin/bash\n'
 output += 'dir=$(dirname "$0")\n'
@@ -31,5 +27,8 @@ for serial, cam in cameras.items():
         output+= "# {} not found\n".format(serial)
         print("\033[91m{} (cam {}) not found\033[0m".format(serial, cam))
 
-with open('tether', 'w') as f:
+tether_exec = 'tether'
+with open(tether_exec, 'w') as f:
     f.write(output)
+
+os.chmod(tether_exec, 755)
