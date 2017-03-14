@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for i in {A..D}; do
+    n=$(ls -l CM$i/ | wc -l)
+    if [ $n -ne 0 ]
+    then
+        n=$(bc $n - 1)
+    fi
+    echo "$i $n"
+done
+
+read
