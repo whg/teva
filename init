@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+python3 tether.py
+exitcode=$?
+if [[ $exitcode != 0 ]]
+then
+    echo "Some cameras not found, press enter to exit"
+    read
+fi
+
+exit

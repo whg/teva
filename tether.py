@@ -27,10 +27,12 @@ for serial, address in mappings.items():
     output+= 'gphoto2 --capture-tethered --port "usb:{:03d},{:03d}" --keep-raw --force-overwrite&\n'.format(*address)
     output+= "popd\n"
 
+exit_code = 0
 for serial, cam in cameras.items():
     if serial not in mappings:
         output+= "# {} not found\n".format(serial)
         print("\033[91m{} (cam {}) not found\033[0m".format(serial, cam))
+        exit_code = 1
 
     foldername = 'CM{}'.format(cam)
     if not os.path.exists(foldername):
@@ -41,3 +43,5 @@ with open(tether_exec, 'w') as f:
     f.write(output)
 
 os.chmod(tether_exec, 755)
+
+sys.exit(exit_code)
