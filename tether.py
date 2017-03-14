@@ -32,6 +32,10 @@ for serial, cam in cameras.items():
         output+= "# {} not found\n".format(serial)
         print("\033[91m{} (cam {}) not found\033[0m".format(serial, cam))
 
+    foldername = 'CM{}'.format(cam)
+    if not os.path.exists(foldername):
+        os.mkdir(foldername)
+
 tether_exec = 'tether'
 with open(tether_exec, 'w') as f:
     f.write(output)
