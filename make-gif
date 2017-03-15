@@ -5,6 +5,19 @@ cd "$(dirname "$0")"
 while true
 do
 
+  ./check_numbers.py
+  if [ $? != 0 ]
+  then
+     tput setaf 1
+     echo "There is a mismatch in the number of photos, do you want to continue [N/y]"
+     tput sgr0
+     read input
+     if [ "$input" != "y" ]
+     then
+        break
+     fi
+   fi
+
   files=$(ls -1 CMA | head -n 1)
 
   if [ -z $files ]
@@ -38,7 +51,7 @@ do
   echo "done"
 
   echo "resizing images... "
-  mogrify -resize 1000x *.JPG
+  mogrify -resize 1920x *.JPG
   echo "done"
 
   giffilename=$gifname".gif"
