@@ -1,0 +1,27 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+
+base_backupdir="/Volumes/HOSKINS/IKEA/_MEDIA"
+
+while true
+do
+
+  prefix=$(date "+%Y_%m_%d")
+  backupdir=$base_backupdir/$prefix
+
+  for i in {A..D}; do
+      folder=CM$i
+      n=$(ls -l $folder/*.CR2 2>/dev/null | wc -l)
+      if [ "$n" -ne "0" ]; then
+        mkdir -p $backupdir/$folder
+        echo -n "backing up: "
+        cp -v $folder/*.CR2 $backupdir/$folder/
+
+        mkdir -p RAWs/$folder
+        echo -n "moving to local: "
+        mv -v $folder/*.CR2 RAWs/$folder/
+      fi
+  done
+
+  sleep 1
+done
