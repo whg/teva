@@ -22,5 +22,5 @@ Run `make-gif`, this will take photos from the folders, create GIFs and show the
 
 **Parameters**
 
-- Framerate: this is set a delay between frames, it's on line 46 of `make-gif`. The value is in 1/100ths of a second
-- Size: On line 41, change the number after `-resize`. If you omit a the number after the `x` it will scale proportionately.
+- Framerate: this is set a delay between frames, it's on line 59 of `make-gif`. The value is in 1/100ths of a second
+- Size: On line 54, change the number after `-resize`. If you omit a the number after the `x` it will scale proportionately.
