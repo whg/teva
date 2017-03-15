@@ -13,6 +13,8 @@ All commands can either be run by double clicking on them in Finder or in the Te
 
 2. To run the tethering, execute `tether`. This will populate the right folders when the photos get tethered.
 
+3. When you're done, or something goes wrong, execute the `stop`.
+
 Making GIFs
 -----------
 
