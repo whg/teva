@@ -1,2 +1,5 @@
 tether
 __pycache__
+*.JPG
+*.jpg
+*.gif

@@ -38,10 +38,15 @@ for serial, cam in cameras.items():
     if not os.path.exists(foldername):
         os.mkdir(foldername)
 
+output+= """
+read
+killall gphoto2
+"""
+
 tether_exec = 'tether'
 with open(tether_exec, 'w') as f:
     f.write(output)
 
-os.chmod(tether_exec, 755)
+os.chmod(tether_exec, 0o755)
 
 sys.exit(exit_code)
