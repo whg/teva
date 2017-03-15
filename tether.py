@@ -24,7 +24,7 @@ output = '#!/bin/bash\n'
 output += 'dir=$(dirname "$0")\n'
 for serial, address in mappings.items():
     output+= 'pushd "$dir/CM{}/"\n'.format(cameras[serial])
-    output+= 'gphoto2 --capture-tethered --port "usb:{:03d},{:03d}" --keep-raw --force-overwrite&\n'.format(*address)
+    output+= 'gphoto2 --capture-tethered --port "usb:{:03d},{:03d}" --keep --force-overwrite&\n'.format(*address)
     output+= "popd\n"
 
 exit_code = 0
